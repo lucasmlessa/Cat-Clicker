@@ -1,61 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <title>Cat Clickr</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script src="js/app.js"></script>
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/main.css">
 </head>
-<script>
-</script>
-
 <body>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4 text-center">
-                <div class="list-group">
-                    <h1 class="list-group-item active">Nome dos Gatos</h1>
-                    <div class="cat-menu">
-                    </div>
-                    <div id="admin-content" class="text-left">
-                        <button class='btn btn-primary' id='adminBtn'>Administrador</button>
-                        <div id="admin-area">
-                            <form id="admin-data">
-                                <div class="form-group">
-                                    <label for="catName">Nome do gato</label>
-                                    <input type="text" name="catName" id="catName" class="form-control">
-                                </div>
-                                <div class="form-group">
-                                    <label for="catImg">Foto do gato</label>
-                                    <input type="text" name="catImg" id="catImg" class="form-control">
-                                </div>
-                                <div class="form-group">
-                                    <label for="catImg">Número de cliques</label>
-                                    <input type="number" id="catCount" name="catCount" class="form-control">
-                                </div>
-                                 <input type="button" class='btn btn-danger' id='cancelBtn' value="Cancelar">
-                                 <input type="button"  class='btn btn-success' id='saveBtn' value="Salvar">
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-8 text-center">
-                <div id="cat-view">
-                    <img id="cat-img" src="" />
-                    <div id="contagem">
-                        <h1 id="cat-name"></h1>
-                        <h2>Contagem</h2>
-                        <p id="cat-numb">
-                            <p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</body>
+    <ul id="cat-list"></ul>
+    <div id="cat">
 
+        <h2 id="cat-name" data-bind="text: name"></h2>
+        <div id="cat-count" data-bind="text: clickCount"></div>
+        <div id="cat-level" data-bind="text: level"></div>
+        <img id="cat-img" src="" alt="cute cat" data-bind="click: incrementCounter, attr: {src: imgSrc}">
+    </div>
+    <script src="js/lib/knockout-3.2.0.js"></script>
+    <script src="js/app.js"></script>
+</body>
 </html>
