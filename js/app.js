@@ -6,6 +6,7 @@ $(function() {
     do gato atual (currentCat) */
     var model = {
         currentCat: null,
+        adminArea: false,
         cats: [{
             'name': 'Hero',
             'count': 0,
@@ -36,6 +37,7 @@ $(function() {
             /* inicia as duas views */
             catMenu.init();
             catView.init();
+            adminView.init();
         },
         /* busca o gato selecionado atualmente */
         getCurrentCat: function() {
@@ -55,8 +57,66 @@ $(function() {
             /* chama a função render da view */
             catView.render();
         },
+        getAdminArea: function() {
+            return model.adminArea;
+        },
+        showAdminArea: function() {
+            model.adminArea = true;
+            catView.render();
+        },
+        closeAdminArea: function() {
+            model.adminArea = false;
+            catView.render();
+        },
+        saveAdminArea: function(name, img, count) {
+            model.currentCat.name = name;
+            model.currentCat.img = img;
+            model.currentCat.count = count;
+            model.adminArea = false;
+            catView.render();
+            catMenu.render();
+        },
+
     };
     /*  View  */
+    var adminView = {
+        init: function() {
+            octopus.closeAdminArea()
+            this.admBtn = $('#adminBtn');
+            this.cancelBtn = $('#cancelBtn');
+            this.admArea = $('#admin-area');
+            this.inputCatName = $('#catName');
+            this.inputCatImg = $('#catImg');
+            this.inputCatCount = $('#catCount');
+            this.render();
+        },
+        render: function() {
+            this.currentCat = octopus.getCurrentCat();
+            this.inputCatName.val(this.currentCat.name);
+            this.inputCatImg.val(this.currentCat.img);
+            this.inputCatCount.val(this.currentCat.count);
+            octopus.getAdminArea() ? this.admArea.show() : this.admArea.hide();
+            this.admBtn.on('click', function() {
+                octopus.showAdminArea();
+                adminView.render();
+
+            });
+            this.cancelBtn.on('click', function() {
+                octopus.closeAdminArea();
+                adminView.render();
+            });
+            $('#saveBtn').on('click', function() {
+                var currentCat = octopus.getCurrentCat();
+                var inputCatName = $('#catName').val();
+                var inputCatImg = $('#catImg').val();
+                var inputCatCount = $('#catCount').val();
+                octopus.saveAdminArea(inputCatName, inputCatImg, inputCatCount);
+                adminView.render();
+            });
+        }
+    }
+
+
     var catView = {
         /* inicia a view e define as variáveis dos elementos do DOM */
         init: function() {
@@ -70,6 +130,7 @@ $(function() {
             this.catViewImg.on('click', function(e) {
                 e.preventDefault();
                 octopus.incrementCounter();
+                adminView.render();
             });
             /* chama a função render da view */
             this.render();
@@ -112,6 +173,7 @@ $(function() {
                 octopus.setCurrentCat(catID);
                 /* chama a função render da view */
                 catView.render();
+                adminView.render();
             });
         }
     };

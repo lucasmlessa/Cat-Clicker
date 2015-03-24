@@ -1,3 +1,12 @@
 #contagem p{
 font-size: 72px;
 }
+#admin-content{
+margin-top: 15px;
+}
+#admin-area{
+margin-top: 10px;	
+}
+#admin-area{
+	display: none;
+}
