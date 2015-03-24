@@ -81,14 +81,28 @@ $(function() {
     /*  View  */
     var adminView = {
         init: function() {
-            octopus.closeAdminArea()
+            var self = this;
+            octopus.closeAdminArea();
             this.admBtn = $('#adminBtn');
             this.cancelBtn = $('#cancelBtn');
             this.admArea = $('#admin-area');
             this.inputCatName = $('#catName');
             this.inputCatImg = $('#catImg');
             this.inputCatCount = $('#catCount');
+            this.admBtn.on('click', function() {
+                octopus.showAdminArea();
+                self.render();
+            });
+            this.cancelBtn.on('click', function() {
+                octopus.closeAdminArea();
+                self.render();
+            });
+            $('#saveBtn').on('click', function() {
+                octopus.saveAdminArea(self.inputCatName.val(), self.inputCatImg.val(), self.inputCatCount.val());
+                self.render();
+            });
             this.render();
+
         },
         render: function() {
             this.currentCat = octopus.getCurrentCat();
@@ -96,23 +110,6 @@ $(function() {
             this.inputCatImg.val(this.currentCat.img);
             this.inputCatCount.val(this.currentCat.count);
             octopus.getAdminArea() ? this.admArea.show() : this.admArea.hide();
-            this.admBtn.on('click', function() {
-                octopus.showAdminArea();
-                adminView.render();
-
-            });
-            this.cancelBtn.on('click', function() {
-                octopus.closeAdminArea();
-                adminView.render();
-            });
-            $('#saveBtn').on('click', function() {
-                var currentCat = octopus.getCurrentCat();
-                var inputCatName = $('#catName').val();
-                var inputCatImg = $('#catImg').val();
-                var inputCatCount = $('#catCount').val();
-                octopus.saveAdminArea(inputCatName, inputCatImg, inputCatCount);
-                adminView.render();
-            });
         }
     }
 
