@@ -5,6 +5,15 @@
     <title>Cat Clickr</title>
 </head>
 <body>
+    
+        
+<div>
+  <ul data-bind="foreach: catList" > <li data-bind="click:function() { $parent.changeCat($index()) }, text:name"></li>
+</ul>
+</div>
+
+
+
     <ul id="cat-list"></ul>
     <div id="cat" data-bind="with:currentCat">
         <h2 id="cat-name" data-bind="text: name"></h2>
